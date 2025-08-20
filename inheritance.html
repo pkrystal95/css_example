@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS 타이포그래피 실습 — 상속, 사이즈, 글꼴, 웹폰트</title>
+
+    <style>
+      /* ==================================================
+         STEP 0. 기본 스타일
+         - body 기본 폰트, 크기, 색상, 줄 간격 지정
+         - line-height: 읽기 좋은 기본 줄 간격
+      ================================================== */
+      body {
+        font-family: sans-serif;
+        font-size: 16px; /* 기본 16px */
+        color: #333; /* 글자 색상 */
+        line-height: 1.6; /* 줄 간격 */
+        margin: 20px;
+        background: #fafafa;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
+        color: #222;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 4px;
+      }
+      h3 {
+        font-size: 1.2rem;
+        color: #555;
+      }
+
+      /* ==================================================
+         STEP 1. 상속(Inheritance)
+         - 텍스트 관련 속성(color, font-size 등)은 상속됨
+         - 박스 속성(border, padding 등)은 상속되지 않음
+      ================================================== */
+      .ancestor {
+        color: green; /* 자식/손자에게 상속 */
+        font-size: 18px; /* 자식/손자에게 상속 */
+        padding: 10px;
+        border: 1px dashed green;
+        margin-bottom: 10px;
+      }
+
+      .grandchild {
+        color: red; /* 상속된 색상 덮어쓰기 */
+        padding: 5px;
+        border: 1px dotted red;
+      }
+
+      .ancestor-box {
+        border: 2px solid orange; /* 상속되지 않는 박스 속성 */
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+
+      .child-box {
+        padding: 5px;
+        background: #fff8e1; /* 자식 박스 배경 */
+      }
+
+      /* ==================================================
+         STEP 2. 사이즈 단위(px, em, rem, %)
+         - px: 절대값
+         - em: 부모 font-size 기준 배수
+         - rem: root(html) font-size 기준 배수
+         - %: 부모 대비 비율
+      ================================================== */
+      html {
+        font-size: 16px;
+      } /* rem 기준 */
+
+      .sizes p {
+        margin: 0.3em 0;
+        padding: 2px 0;
+      }
+
+      .px {
+        font-size: 24px;
+        color: #2a7ae2;
+      }
+      .em {
+        font-size: 2em;
+        color: #e27a2a;
+      }
+      .rem {
+        font-size: 1.5rem;
+        color: #2ae27a;
+      }
+      .percent {
+        font-size: 120%;
+        color: #a22ae2;
+      }
+
+      /* em vs rem 비교 */
+      .parent {
+        font-size: 20px;
+        background: #f0f0f0;
+        padding: 10px;
+        margin-top: 10px;
+        border-left: 4px solid #ccc;
+      }
+
+      .child-em {
+        font-size: 2em;
+        color: #ff6600;
+      } /* 20px * 2 = 40px */
+      .child-rem {
+        font-size: 2rem;
+        color: #0066ff;
+      } /* 16px * 2 = 32px */
+
+      /* ==================================================
+         STEP 3. 글꼴 속성
+         - font-family, font-weight, font-style, line-height, letter-spacing
+      ================================================== */
+      .font-family-serif {
+        font-family: Georgia, "Times New Roman", serif;
+      }
+      .font-family-sans {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .weight-normal {
+        font-weight: normal;
+      }
+      .weight-bold {
+        font-weight: bold;
+      }
+      .weight-900 {
+        font-weight: 900;
+      }
+      .italic {
+        font-style: italic;
+      }
+      .lineheight {
+        line-height: 2;
+        background: #f0f0f0;
+        padding: 4px;
+      }
+      .spacing {
+        letter-spacing: 4px;
+        background: #fafafa;
+        padding: 4px;
+      }
+
+      /* ==================================================
+         STEP 4. 웹폰트(@font-face, CDN)
+         - noonnu 웹폰트 PartialSansKR-Regular 불러오기
+         - body에 클래스 적용 시 전체 글꼴 변경
+         - input, textarea, button은 직접 지정 필요
+      ================================================== */
+      @font-face {
+        font-family: "PartialSansKR-Regular";
+        src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2")
+          format("woff2");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      body.webfont {
+        font-family: "PartialSansKR-Regular", sans-serif;
+      }
+
+      input,
+      textarea,
+      button {
+        font-family: "PartialSansKR-Regular", sans-serif;
+      }
+
+      /* 버튼 스타일 개선 */
+      button {
+        padding: 6px 12px;
+        margin-top: 5px;
+        margin-right: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        background: #f5f5f5;
+        transition: background 0.3s;
+      }
+      button:hover {
+        background: #e0e0e0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>CSS 타이포그래피 실습</h1>
+
+    <p>
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis consequatur
+      soluta, inventore nobis pariatur repellat nihil voluptates, atque est,
+      minima quo sed. Dolorem vitae fugiat atque officiis dignissimos pariatur
+      quidem!
+    </p>
+
+    <!-- STEP 1. 상속 -->
+    <h2>1) 상속</h2>
+    <div class="ancestor">
+      조상 div (.ancestor) → color: green; font-size: 18px
+      <div class="child">
+        자식 div (.child)도 초록색 18px
+        <div class="grandchild">
+          손자 div (.grandchild)은 color: red; 로 덮어씀
+        </div>
+      </div>
+    </div>
+
+    <div class="ancestor-box">
+      border 속성은 상속되지 않음
+      <div class="child-box">→ 자식 div엔 border 없음</div>
+    </div>
+
+    <!-- STEP 2. 사이즈 단위 -->
+    <h2>2) 사이즈 단위</h2>
+    <div class="sizes">
+      <p class="px">24px — 절대 크기</p>
+      <p class="em">2em — 부모의 2배</p>
+      <p class="rem">1.5rem — html 기준</p>
+      <p class="percent">120% — 부모 대비</p>
+    </div>
+
+    <h3>em vs rem 비교</h3>
+    <div class="parent">
+      부모(.parent) font-size: 20px
+      <p class="child-em">2em → 20px * 2 = 40px</p>
+      <p class="child-rem">2rem → html 16px * 2 = 32px</p>
+    </div>
+
+    <!-- STEP 3. 글꼴 속성 -->
+    <h2>3) 글꼴 속성</h2>
+    <p class="font-family-serif">Georgia — 세리프 계열 (장식 있는 글꼴)</p>
+    <p class="font-family-sans">Arial — 산세리프 계열 (단순한 글꼴)</p>
+    <p class="weight-normal">font-weight: normal</p>
+    <p class="weight-bold">font-weight: bold</p>
+    <p class="weight-900">font-weight: 900 (폰트가 지원할 경우 가장 두꺼움)</p>
+    <p class="italic">font-style: italic (기울임)</p>
+    <p class="lineheight">line-height: 2 — 줄 간격 넓게</p>
+    <p class="spacing">letter-spacing: 4px → 글자 간격 벌림</p>
+
+    <!-- STEP 4. 웹폰트 적용 -->
+    <h2>4) 웹폰트 적용</h2>
+    <p>
+      아래 버튼을 누르면 body에 <code>webfont</code> 클래스가 추가되어 웹폰트
+      적용됨.
+    </p>
+    <button onclick="document.body.classList.toggle('webfont')">
+      웹폰트 토글
+    </button>
+
+    <p>이 문장은 body에 <b>PartialSansKR-Regular</b>가 적용되면 바뀝니다.</p>
+    <input type="text" placeholder="input도 웹폰트 적용됨" />
+    <textarea rows="2" cols="40">textarea도 웹폰트 적용됨</textarea>
+    <button>버튼도 웹폰트 적용됨</button>
+  </body>
+</html>
