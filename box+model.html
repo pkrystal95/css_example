@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS 박스모델 실습</title>
+
+    <!-- ****************************************************
+       [브리핑 — 개념 요약]
+       1) 박스모델(Box Model) 구조: content → padding → border → margin
+       2) width/height와 box-sizing
+       3) background와 border 관계
+       4) border-radius (모서리 둥글게)
+       5) margin 충돌(Collapsing Margins)
+       6) overflow (넘침 처리)
+       -----------------------------------------------------
+       ※ 실무 팁
+         - * { box-sizing: border-box; } 자주 사용.
+         - margin 충돌 회피: 부모에 padding/border 주기.
+         - overflow는 모달, 스크롤 컨테이너에 필수.
+     **************************************************** -->
+
+    <style>
+      /* =========================
+         [공통 스타일]
+      ========================== */
+      body {
+        font-family: sans-serif;
+        margin: 20px;
+        background: whitesmoke;
+        line-height: 1.5;
+      }
+
+      h1 {
+        margin-bottom: 30px;
+        color: #222;
+      }
+
+      h2 {
+        margin-bottom: 15px;
+        border-left: 6px solid #555;
+        padding-left: 8px;
+        color: #333;
+      }
+
+      .demo {
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.05);
+        margin-bottom: 40px;
+        padding: 20px;
+      }
+
+      /* =========================
+         1) 기본 박스모델
+      ========================== */
+      .box {
+        display: block;
+        width: 200px;
+        height: 100px;
+        margin: 20px;
+        padding: 20px;
+        border: 5px solid navy;
+        background: lightblue;
+        transition: transform 0.2s;
+      }
+      .box:hover {
+        transform: scale(1.05);
+      }
+
+      /* =========================
+         2) margin 충돌
+      ========================== */
+      .collapse-demo p {
+        margin: 20px 0;
+        padding: 6px;
+        background: lightgreen;
+        border-radius: 6px;
+      }
+
+      /* =========================
+         3) box-sizing 비교
+      ========================== */
+      .content-box,
+      .border-box {
+        display: inline-block;
+        width: 200px;
+        margin: 10px;
+        padding: 20px;
+        border-width: 5px;
+        border-style: solid;
+        text-align: center;
+        font-weight: bold;
+        transition: box-shadow 0.2s;
+      }
+      .content-box {
+        box-sizing: content-box; /* 기본 */
+        border-color: red;
+        background: pink;
+      }
+      .border-box {
+        box-sizing: border-box;
+        border-color: blue;
+        background: lightyellow;
+      }
+      .content-box:hover,
+      .border-box:hover {
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+      }
+
+      /* =========================
+         4) border-radius
+      ========================== */
+      .radius-box {
+        display: inline-block;
+        width: 120px;
+        height: 120px;
+        margin-right: 20px;
+        border: 4px solid darkred;
+        background: coral;
+        text-align: center;
+        line-height: 120px;
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+        transition: transform 0.3s;
+      }
+      .r10 {
+        border-radius: 10px;
+      }
+      .r50 {
+        border-radius: 50%;
+      }
+      .radius-box:hover {
+        transform: rotate(5deg);
+      }
+
+      /* =========================
+         5) overflow
+      ========================== */
+      .overflow-box {
+        display: inline-block;
+        width: 150px;
+        height: 50px;
+        margin-bottom: 50px;
+        margin-right: 20px;
+        padding: 5px;
+        border: 2px solid black;
+        background: lightgray;
+        font-size: 14px;
+        vertical-align: top;
+      }
+      .ov-visible {
+        overflow: visible;
+      }
+      .ov-hidden {
+        overflow: hidden;
+      }
+      .ov-scroll {
+        overflow: scroll;
+      }
+      .ov-auto {
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS 박스모델 실습</h1>
+
+    <!-- SECTION 1. 기본 박스모델 -->
+    <div class="demo">
+      <h2>1) 기본 박스모델</h2>
+      <div class="box">콘텐츠</div>
+      <ul>
+        <li>content: 글자, 이미지 등 실제 내용</li>
+        <li>padding: 내부 여백 (배경색 포함)</li>
+        <li>border: 테두리 (border-color)</li>
+        <li>margin: 외부 여백 (투명)</li>
+      </ul>
+    </div>
+
+    <!-- SECTION 2. margin 충돌 -->
+    <div class="demo collapse-demo">
+      <h2>2) margin 충돌</h2>
+      <p>첫 번째 단락 (margin-top: 20px)</p>
+      <p>두 번째 단락 (margin-top: 20px)</p>
+      <p>세 번째 단락 (margin-top: 20px)</p>
+      <p>→ 간격은 20px만 (겹쳐서 상쇄됨)</p>
+    </div>
+
+    <!-- SECTION 3. box-sizing -->
+    <div class="demo">
+      <h2>3) box-sizing</h2>
+      <div class="content-box">content-box</div>
+      <div class="border-box">border-box</div>
+      <p>
+        두 박스 모두 width:200px; padding:20px; border:5px.<br />
+        → content-box: 총 너비 = 200 + 40 + 10 = 250px<br />
+        → border-box: 총 너비 = 200px 고정
+      </p>
+    </div>
+
+    <!-- SECTION 4. border-radius -->
+    <div class="demo">
+      <h2>4) border-radius</h2>
+      <div class="radius-box r10">10px</div>
+      <div class="radius-box r50">50%</div>
+      <p>
+        border-radius는 모서리를 둥글게.<br />
+        - px: 반경 직접 지정 (10px)<br />
+        - %: 비율 기준, 50%면 원형
+      </p>
+    </div>
+
+    <!-- SECTION 5. overflow -->
+    <div class="demo">
+      <h2>5) overflow</h2>
+      <div class="overflow-box ov-visible">
+        visible<br />넘쳐도<br />그대로<br />보임
+      </div>
+      <div class="overflow-box ov-hidden">hidden<br />넘치면<br />잘림</div>
+      <div class="overflow-box ov-scroll">
+        scroll<br />항상<br />스크롤<br />표시<br />추가<br />내용
+      </div>
+      <div class="overflow-box ov-auto">
+        auto<br />넘칠 때만<br />스크롤<br />표시<br />추가<br />내용
+      </div>
+      <p>
+        overflow는 content가 박스를 넘칠 때 처리 방식.<br />
+        - visible (기본)<br />
+        - hidden<br />
+        - scroll<br />
+        - auto
+      </p>
+    </div>
+  </body>
+</html>
